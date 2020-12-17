@@ -24,11 +24,14 @@ public class MainController {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
 
-    User n = new User();
-    n.setName(name);
-    n.setPassword(password);
-    userRepository.save(n);
-    return "Saved";
+    if(userRepository.findByName(name).isEmpty()) {
+        User n = new User();
+        n.setName(name);
+        n.setPassword(password);
+        userRepository.save(n);
+        return "Saved";
+    }
+    return "Error";
   }
 
   @GetMapping(path="/all/{pageNo}/{pageSize}")
